@@ -12,11 +12,13 @@ import { getPlanetCameraScale, PLANET_WORLD_HEIGHT, PLANET_WORLD_WIDTH } from "@
 import { startMotorHum, setEngineIntensity } from "@/game/sfx";
 import { SHOT_DURATION_MS, SHOT_FRONT_OFFSET, SHOT_SPEED, SHOT_WIDTH_WORLD } from "@/game/shot";
 
+const BASE = import.meta.env.BASE_URL;
+
 const ASSETS = {
-  abyss: "/assets/endless-dark-abyss-field.png",
-  joystick: "/assets/endless-dark-joystick-halo.png",
-  logo: "/assets/endless-dark-logo.png",
-  music: "/assets/audio/bgm-kepler-loop.mp3",
+  abyss: `${BASE}assets/endless-dark-abyss-field.png`,
+  joystick: `${BASE}assets/endless-dark-joystick-halo.png`,
+  logo: `${BASE}assets/endless-dark-logo.png`,
+  music: `${BASE}assets/audio/bgm-kepler-loop.mp3`,
 } as const;
 
 const CAFE_BARTENDER = { x: 0, y: -3.35 };

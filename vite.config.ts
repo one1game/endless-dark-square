@@ -207,6 +207,8 @@ const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(
 
 export default defineConfig({
   plugins,
+  // GitHub Pages hosts the app under /endless-dark-square/ — keep "/" for local dev
+  base: process.env.GITHUB_ACTIONS === "true" ? "/endless-dark-square/" : "/",
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "client", "src"),
