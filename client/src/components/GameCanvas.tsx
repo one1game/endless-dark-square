@@ -196,6 +196,7 @@ export default function GameCanvas() {
   const atmosphereOpenRef = useRef(atmosphereOpen);
   const [atmospherePosition, setAtmospherePosition] = useState({ x: 0, y: 2.7 });
   const atmospherePositionRef = useRef(atmospherePosition);
+  const atmosphereRotationRef = useRef(0);
   const [atmosphereShots, setAtmosphereShots] = useState<AtmosphereShot[]>([]);
   const atmosphereShotsRef = useRef<AtmosphereShot[]>([]);
   const planetFrameTimeEwmaRef = useRef(1 / 60);
@@ -746,7 +747,7 @@ export default function GameCanvas() {
             ref={atmospherePlayerRef}
             className="atmosphere-player"
             aria-hidden="true"
-            style={{ transform: `translate3d(calc(-50% + ${atmospherePosition.x * getPlanetCameraScale()}px), calc(-50% - ${atmospherePosition.y * getPlanetCameraScale()}px), 0)` }}
+            style={{ transform: `translate3d(calc(-50% + ${atmospherePosition.x * getPlanetCameraScale()}px), calc(-50% - ${atmospherePosition.y * getPlanetCameraScale()}px), 0) rotate(0rad) scale(1)` }}
           >
             <span className="atmosphere-player-inner" />
             <i className="atmosphere-player-fragment" />
