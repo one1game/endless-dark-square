@@ -10,7 +10,7 @@ import "@babylonjs/core/Shaders/color.fragment";
 import "@babylonjs/core/Shaders/color.vertex";
 import { InputManager, type MoveVector } from "./InputManager";
 import { getBrowserPerformanceProfile, type PerformanceProfile } from "./performance";
-import { playShot, disposeShotAudio, setEngineIntensity } from "./sfx";
+import { playShot, disposeShotAudio, setEngineIntensity, vibrateForSpeed } from "./sfx";
 import { SHOT_DURATION_SECONDS, SHOT_FRONT_OFFSET, SHOT_SPEED, SHOT_WIDTH_WORLD } from "./shot";
 import { expApproach, smootherstep01 } from "./graphicsMath";
 
@@ -217,6 +217,7 @@ export class GameWorld {
     // На планете гул управляется извне (движение по поверхности).
     const speed = Math.hypot(this.velocity.x, this.velocity.y);
     if (!this.atmosphereActive) setEngineIntensity(speed);
+    if (!this.atmosphereActive) vibrateForSpeed(speed);
 
     const movement = 5.25 * delta;
     for (const star of this.stars) {

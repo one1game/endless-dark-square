@@ -9,7 +9,7 @@ import { applyControlCurve } from "@/game/controls";
 import { expApproach, smootherstep01 } from "@/game/graphicsMath";
 import { getBrowserPerformanceProfile } from "@/game/performance";
 import { getPlanetCameraScale, PLANET_WORLD_HEIGHT, PLANET_WORLD_WIDTH } from "@/game/planetCamera";
-import { startMotorHum, setEngineIntensity } from "@/game/sfx";
+import { startMotorHum, setEngineIntensity, vibrateForSpeed } from "@/game/sfx";
 import { SHOT_DURATION_MS, SHOT_FRONT_OFFSET, SHOT_SPEED, SHOT_WIDTH_WORLD } from "@/game/shot";
 
 const BASE = import.meta.env.BASE_URL;
@@ -474,6 +474,7 @@ export default function GameCanvas() {
       }
       // Тот же отклик двигателя, что и в космосе: интенсивность равна модулю скорости.
       setEngineIntensity(Math.min(1, Math.hypot(velocity.x, velocity.y)));
+      vibrateForSpeed(Math.min(1, Math.hypot(velocity.x, velocity.y)));
       // Волны выстрелов на планете двигаются и гаснут; спавн — из onShoot (единый выстрел).
       if (atmosphereShotsRef.current.length > 0) {
         const shotDelta = planetShotLastUpdateRef.current > 0

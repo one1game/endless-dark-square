@@ -186,3 +186,23 @@ export function disposeShotAudio() {
   shotContext = null;
   noiseBuffer = null;
 }
+
+// Тактильный отклик на полёт: вибрация телефона пропорциональна скорости.
+// Тикаем не чаще раза в ~200мс — браузерные паттерны вибрации не бесконечные,
+// и частые вызовы лишь перезапускают одну и ту же вибрацию.
+let lastVibrationAt = 0;
+
+export function vibrateForSpeed(speed: number) {
+  if (typeof navigator === "undefined" || typeof navigator.vibrate !== "function") return;
+  const clamped = Math.max(0, Math.min(1, speed));
+  const now = performance.now();
+  if (clamped < 0.05) {
+    lastVibrationAt = 0;
+    navigator.vibrate(0);
+    return;
+  }
+  if (now - lastVibrationAt < 200) return;
+  lastVibrationAt = now;
+  // Чем выше скорость — тем дольше импульс: 10мс на месте, ~48мс на полном ходу.
+  navigator.vibrate(Math.round(8 + clamped * 40));
+}
