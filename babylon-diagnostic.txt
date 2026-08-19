@@ -1,0 +1,66 @@
+IMPORTS
+C:\Users\phpdead\Desktop\endless-dark-square-standalone\client\src\components\GameCanvas.tsx:6:import { Engine } from "@babylonjs/core/Engines/engine";
+C:\Users\phpdead\Desktop\endless-dark-square-standalone\client\src\game\GameWorld.ts:2:import { Camera } from "@babylonjs/core/Cameras/camera";
+C:\Users\phpdead\Desktop\endless-dark-square-standalone\client\src\game\GameWorld.ts:3:import { FreeCamera } from "@babylonjs/core/Cameras/freeCamera";
+C:\Users\phpdead\Desktop\endless-dark-square-standalone\client\src\game\GameWorld.ts:4:import { Color3 } from "@babylonjs/core/Maths/math.color";
+C:\Users\phpdead\Desktop\endless-dark-square-standalone\client\src\game\GameWorld.ts:5:import { Vector3 } from "@babylonjs/core/Maths/math.vector";
+C:\Users\phpdead\Desktop\endless-dark-square-standalone\client\src\game\GameWorld.ts:6:import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
+C:\Users\phpdead\Desktop\endless-dark-square-standalone\client\src\game\GameWorld.ts:7:import type { LinesMesh } from "@babylonjs/core/Meshes/linesMesh";
+C:\Users\phpdead\Desktop\endless-dark-square-standalone\client\src\game\GameWorld.ts:8:import type { Scene } from "@babylonjs/core/scene";
+C:\Users\phpdead\Desktop\endless-dark-square-standalone\client\src\game\GameWorld.ts:9:import "@babylonjs/core/Shaders/color.fragment";
+C:\Users\phpdead\Desktop\endless-dark-square-standalone\client\src\game\GameWorld.ts:10:import "@babylonjs/core/Shaders/color.vertex";
+C:\Users\phpdead\Desktop\endless-dark-square-standalone\client\src\game\scene.ts:2:import { FreeCamera } from "@babylonjs/core/Cameras/freeCamera";
+C:\Users\phpdead\Desktop\endless-dark-square-standalone\client\src\game\scene.ts:3:import type { Engine } from "@babylonjs/core/Engines/engine";
+C:\Users\phpdead\Desktop\endless-dark-square-standalone\client\src\game\scene.ts:4:import { Color4 } from "@babylonjs/core/Maths/math.color";
+C:\Users\phpdead\Desktop\endless-dark-square-standalone\client\src\game\scene.ts:5:import { Vector3 } from "@babylonjs/core/Maths/math.vector";
+C:\Users\phpdead\Desktop\endless-dark-square-standalone\client\src\game\scene.ts:6:import { Scene } from "@babylonjs/core/scene";
+PACKAGE
+
+> package.json:7:    "dev": "vite --host",
+> package.json:8:    "build": "vite build && esbuild server/index.ts --platform
+=node --packages=external --bundle --format=esm --outdir=dist",
+  package.json:9:    "start": "NODE_ENV=production node dist/index.js",
+> package.json:10:    "preview": "vite preview --host",
+  package.json:11:    "check": "tsc --noEmit",
+> package.json:15:    "@babylonjs/core": "^9.21.2",
+  package.json:16:    "@capacitor/android": "^8.5.0",
+> package.json:71:    "@builder.io/vite-plugin-jsx-loc": "^0.1.1",
+  package.json:72:    "@capacitor/cli": "^8.5.0",
+> package.json:74:    "@tailwindcss/vite": "^4.1.3",
+  package.json:75:    "@types/express": "4.17.21",
+> package.json:80:    "@vitejs/plugin-react": "^5.0.4",
+  package.json:81:    "add": "^2.0.6",
+> package.json:90:    "typescript": "5.6.3",
+> package.json:91:    "vite": "^7.1.7",
+> package.json:92:    "vite-plugin-manus-runtime": "^0.0.58",
+> package.json:93:    "vitest": "^2.1.4"
+  package.json:94:  },
+
+
+
+VITE MANUAL CHUNKS
+
+  vite.config.ts:222:    rollupOptions: {
+  vite.config.ts:223:      output: {
+> vite.config.ts:224:        manualChunks(id) {
+  vite.config.ts:225:          if (!id.includes("node_modules")) return undefin
+ed;
+  vite.config.ts:226:          const normalizedId = id.replaceAll("\\\\", "/");
+> vite.config.ts:227:          const babylonMarker = "/node_modules/@babylonjs/
+core/";
+> vite.config.ts:228:          const babylonIndex = normalizedId.indexOf(babylo
+nMarker);
+  vite.config.ts:229:          if (babylonIndex !== -1) {
+> vite.config.ts:230:            const family = normalizedId.slice(babylonIndex
+ + babylonMarker.length).split("/")[0] || "core";
+> vite.config.ts:231:            const chunkFamily = family === "Compat" ? "Mis
+c" : family;
+> vite.config.ts:232:            return `babylon-${chunkFamily.replace(/[^a-zA-
+Z0-9_-]/g, "-")}`;
+  vite.config.ts:233:          }
+  vite.config.ts:234:          if (id.includes("react") || id.includes("wouter"
+)) return "react-vendor";
+  vite.config.ts:235:          return "vendor";
+
+
+
