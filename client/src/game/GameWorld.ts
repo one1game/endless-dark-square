@@ -29,13 +29,6 @@ type ShootingStar = {
   velocity: { x: number; y: number };
 };
 
-type ScopeArc = {
-  mesh: LinesMesh;
-  depth: number;
-  baseAlpha: number;
-  phase: number;
-};
-
 type Anomaly = {
   outer: LinesMesh;
   inner: LinesMesh;
@@ -106,7 +99,6 @@ export class GameWorld {
   private readonly stars: Star[] = [];
   private readonly shootingStars: ShootingStar[] = [];
   private nextShootingStarAt = 12;
-  private readonly scopeArcs: ScopeArc[] = [];
   private readonly waves: Wave[] = [];
   private readonly leeches: Leech[] = [];
   private readonly transitPilots: TransitPilot[] = [];
@@ -163,7 +155,6 @@ export class GameWorld {
     this.playerInner = this.makePlayer("playerInner", 1.63, WHITE, 1);
     this.playerFragment = this.makePlayerFragment(1.52);
     this.createStarField();
-    this.createScopeArcs();
     this.nextLeechAt = 8.5;
     this.nextTransitPilotAt = 25;
     this.stationDistanceTarget = this.nextStationDistance();
@@ -233,13 +224,6 @@ export class GameWorld {
       star.mesh.position.y -= this.velocity.y * movement * star.speed;
       this.recycleStar(star);
       star.mesh.visibility = star.baseVisibility * (0.83 + Math.sin(this.elapsed * (0.65 + star.speed) + star.phase) * 0.17);
-    }
-
-    for (const arc of this.scopeArcs) {
-      arc.mesh.position.x -= this.velocity.x * movement * arc.depth;
-      arc.mesh.position.y -= this.velocity.y * movement * arc.depth;
-      arc.mesh.rotation.z = Math.sin(this.elapsed * 0.035 + arc.phase) * 0.018;
-      arc.mesh.alpha = arc.baseAlpha * (0.7 + Math.sin(this.elapsed * 0.12 + arc.phase) * 0.16);
     }
 
     this.updatePlanetTravel(delta, movement);
@@ -408,40 +392,6 @@ export class GameWorld {
         this.shootingStars.splice(index, 1);
       }
     }
-  }
-
-  private createScopeArcs() {
-    const blueGrey = new Color3(0.28, 0.42, 0.44);
-    const scale = 3;
-    const layouts = [
-      { x: 0.2 * scale, y: 12.8 * scale, radius: 10.2 * scale, start: 3.64, end: 5.78, alpha: 0.16, depth: 0.05 },
-      { x: -14.5 * scale, y: -1.5 * scale, radius: 12.3 * scale, start: 5.08, end: 1.24, alpha: 0.1, depth: 0.028 },
-      { x: 14.2 * scale, y: 5.5 * scale, radius: 10.8 * scale, start: 1.96, end: 4.05, alpha: 0.12, depth: 0.038 },
-      { x: -6.2 * scale, y: -13.5 * scale, radius: 15.4 * scale, start: 0.18, end: 2.22, alpha: 0.075, depth: 0.02 },
-    ];
-
-    layouts.forEach((layout, layoutIndex) => {
-      const points: Vector3[] = [];
-      const normalizedEnd = layout.end < layout.start ? layout.end + Math.PI * 2 : layout.end;
-      for (let index = 0; index <= 34; index += 1) {
-        const t = index / 34;
-        const angle = layout.start + (normalizedEnd - layout.start) * t;
-        points.push(new Vector3(
-          layout.x + Math.cos(angle) * layout.radius,
-          layout.y + Math.sin(angle) * layout.radius,
-          -0.35,
-        ));
-      }
-      const arc = MeshBuilder.CreateLines(`scopeArc-${layoutIndex}`, { points }, this.scene);
-      arc.color = blueGrey;
-      arc.alpha = layout.alpha;
-      this.scopeArcs.push({
-        mesh: arc,
-        depth: layout.depth,
-        baseAlpha: layout.alpha,
-        phase: layoutIndex * 1.73,
-      });
-    });
   }
 
   private updateAnomaly(delta: number, movement: number) {
