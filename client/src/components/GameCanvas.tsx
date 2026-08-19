@@ -918,13 +918,13 @@ export default function GameCanvas() {
         role="application"
         aria-label="Джойстик направления"
         onPointerDown={(event) => {
-          if (!event.isPrimary || activePointerId.current !== null) return;
+          if (activePointerId.current !== null) return;
           activePointerId.current = event.pointerId;
           event.currentTarget.setPointerCapture(event.pointerId);
           updateJoystick(event.clientX, event.clientY);
         }}
         onPointerMove={(event) => {
-          if (event.isPrimary && event.pointerId === activePointerId.current) {
+          if (event.pointerId === activePointerId.current) {
             updateJoystick(event.clientX, event.clientY);
           }
         }}
@@ -950,7 +950,7 @@ export default function GameCanvas() {
         type="button"
         aria-label="Огонь: удерживайте, чтобы стрелять"
         onPointerDown={(event) => {
-          if (!event.isPrimary || firePointerId.current !== null) return;
+          if (firePointerId.current !== null) return;
           firePointerId.current = event.pointerId;
           event.currentTarget.setPointerCapture(event.pointerId);
           handleRef.current?.setFiring(true);
