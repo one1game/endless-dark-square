@@ -203,7 +203,6 @@ export default function GameCanvas() {
   const planetQualityDebtRef = useRef(0);
   const planetLowQualityRef = useRef(false);
   const planetShotLastUpdateRef = useRef(0);
-  const planetShotLastRenderRef = useRef(0);
   const [cafeCrewCount, setCafeCrewCount] = useState(() => {
     const count = Number(cafeParams.get("visitors"));
     return Number.isFinite(count) ? Math.max(0, Math.min(3, Math.floor(count))) : 0;
@@ -499,10 +498,8 @@ export default function GameCanvas() {
             alpha: 0.68 * (1 - smootherstep01((now - shot.bornAt) / SHOT_DURATION_MS)),
           }))
           .filter((shot) => now - shot.bornAt < SHOT_DURATION_MS);
-        if (now - planetShotLastRenderRef.current >= PLANET_RENDER_PROFILE.planetShotRenderInterval * 1000) {
-          planetShotLastRenderRef.current = now;
-          setAtmosphereShots(atmosphereShotsRef.current);
-        }
+        // Рендер каждого кадра — как волны в космосе, без прореживания.
+        setAtmosphereShots(atmosphereShotsRef.current);
       }
       frame = requestAnimationFrame(moveInAtmosphere);
     };
@@ -656,7 +653,6 @@ export default function GameCanvas() {
     atmosphereSurfaceOffsetRef.current = { x: 0, y: 0 };
     atmosphereShotsRef.current = [];
     planetShotLastUpdateRef.current = 0;
-    planetShotLastRenderRef.current = 0;
     setAtmosphereShots([]);
     setAtmospherePosition({ x: 0, y: 0 });
     atmospherePositionRef.current = { x: 0, y: 0 };
@@ -680,7 +676,6 @@ export default function GameCanvas() {
     atmosphereMoveRef.current = { x: 0, y: 0 };
     atmosphereShotsRef.current = [];
     planetShotLastUpdateRef.current = 0;
-    planetShotLastRenderRef.current = 0;
     setAtmosphereShots([]);
     planetTransitionProgressRef.current = 1;
     setPlanetTransitionProgress(1);

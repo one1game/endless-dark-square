@@ -818,11 +818,10 @@ button.bag-slot:active { transform: scale(0.94); }
   z-index: 4;
   top: 50%;
   left: 50%;
-  width: 52px;
-  height: 1px;
-  background: rgb(124 224 213);
+  height: 2px;
+  background: rgb(148 235 224);
   transform-origin: center;
-  box-shadow: none;
+  box-shadow: 0 0 0 1px rgba(3, 14, 16, 0.85), 0 0 10px rgba(124, 224, 213, 0.8), 0 0 24px rgba(124, 224, 213, 0.45);
   contain: layout paint;
   backface-visibility: hidden;
   will-change: transform, opacity;
