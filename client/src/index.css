@@ -784,8 +784,8 @@ button.bag-slot:active { transform: scale(0.94); }
   z-index: 3;
   top: 50%;
   left: 50%;
-  width: clamp(22px, 3.7svh, 40px);
-  height: clamp(22px, 3.7svh, 40px);
+  width: clamp(12px, 1.9svh, 22px);
+  height: clamp(12px, 1.9svh, 22px);
   border: 1px solid rgba(225, 255, 251, 0.95);
   clip-path: polygon(3.94% 0, 100% 11.67%, 87.4% 100%, 0 93.3%);
   background: rgba(56, 130, 125, 0.16);
