@@ -460,7 +460,16 @@ export default function GameCanvas() {
       if (planetQualityDebtRef.current < -1) planetLowQualityRef.current = false;
       atmospherePositionRef.current = nextPosition;
       if (atmospherePlayerRef.current) {
-        atmospherePlayerRef.current.style.transform = `translate3d(calc(-50% + ${nextPosition.x * planetScale}px), calc(-50% - ${nextPosition.y * planetScale}px), 0)`;
+        // Как в космосе: та же формула разворота от направления джойстика (Y вверх),
+        // зеркально для DOM (экранный Y вниз).
+        const dir = atmosphereLastDirectionRef.current;
+        const facingTarget = Math.atan2(-dir.x, dir.y);
+        const currentAngle = atmosphereRotationRef.current;
+        const angleDelta = Math.atan2(Math.sin(-facingTarget - currentAngle), Math.cos(-facingTarget - currentAngle));
+        atmosphereRotationRef.current = currentAngle + angleDelta * Math.min(1, deltaSeconds * 6.2);
+        const pulse = 0.96 + Math.sin(now * 0.0011) * 0.035;
+        atmospherePlayerRef.current.style.transform =
+          `translate3d(calc(-50% + ${nextPosition.x * planetScale}px), calc(-50% - ${nextPosition.y * planetScale}px), 0) rotate(${atmosphereRotationRef.current}rad) scale(${pulse})`;
       }
 
       const movement = 5.25 * deltaSeconds;
