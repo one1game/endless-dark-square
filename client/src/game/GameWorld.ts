@@ -223,7 +223,7 @@ export class GameWorld {
       star.mesh.position.x -= this.velocity.x * movement * star.speed;
       star.mesh.position.y -= this.velocity.y * movement * star.speed;
       this.recycleStar(star);
-      star.mesh.visibility = star.baseVisibility * (0.83 + Math.sin(this.elapsed * (0.65 + star.speed) + star.phase) * 0.17);
+      star.mesh.visibility = star.baseVisibility * (0.7 + Math.sin(this.elapsed * (0.8 + star.speed) + star.phase) * 0.3);
     }
 
     this.updatePlanetTravel(delta, movement);
@@ -320,7 +320,7 @@ export class GameWorld {
     const starCount = this.performanceProfile.starCount;
     for (let index = 0; index < starCount; index += 1) {
       const roll = this.seed(index * 11.37);
-      const radius = roll > 0.97 ? 0.09 : roll > 0.83 ? 0.052 : 0.024 + this.seed(index * 5.1) * 0.018;
+      const radius = roll > 0.97 ? 0.13 : roll > 0.83 ? 0.075 : 0.034 + this.seed(index * 5.1) * 0.026;
       const star = MeshBuilder.CreateLines(`star-${index}`, {
         points: [new Vector3(-radius, 0, 0), new Vector3(radius, 0, 0)],
       }, this.scene);
@@ -330,12 +330,12 @@ export class GameWorld {
         this.range(index * 13.2, -0.2, 0.2),
       );
       star.color = roll > 0.97 ? WHITE : roll > 0.83 ? TEAL : MIST;
-      star.alpha = roll > 0.97 ? 0.98 : roll > 0.83 ? 0.72 : 0.33;
+      star.alpha = roll > 0.97 ? 1 : roll > 0.83 ? 0.86 : 0.5;
       this.stars.push({
         mesh: star,
         radius,
-        speed: 0.35 + this.seed(index * 9.7) * 1.05,
-        baseVisibility: roll > 0.97 ? 0.98 : roll > 0.83 ? 0.72 : 0.33,
+        speed: 0.62 + this.seed(index * 9.7) * 1.75,
+        baseVisibility: roll > 0.97 ? 1 : roll > 0.83 ? 0.86 : 0.5,
         phase: this.seed(index * 4.3) * Math.PI * 2,
       });
     }
